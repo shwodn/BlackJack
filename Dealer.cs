@@ -8,21 +8,23 @@ namespace ConsoleProjectBlackJack
 {
     internal class Dealer
     {
-        private Game.CardState dealerState;
+        private Game.CardState dealerCardState;
         private List<Deck.DeckInfo> dealerCardOnHand;
 
-        public Game.CardState DealerState {  get { return dealerState; } }
+        public Game.CardState DealerState {  get { return dealerCardState; } }
         public List<Deck.DeckInfo> DealerCardOnHand { get { return dealerCardOnHand; } private set { dealerCardOnHand = value; } }
 
         public Dealer()
         {
             dealerCardOnHand = new List<Deck.DeckInfo>();
-            dealerState = Game.CardState.Null;
+            dealerCardState = Game.CardState.Null;
         }
 
         public void DealerDraw(Deck inputDeck)
         {
             dealerCardOnHand.Add(inputDeck.DrawCard());
+            PrintDealerCard(inputDeck);
+            dealerCardState = Game.UpdateCardState(inputDeck.CalCard( dealerCardOnHand, dealerCardState) );
         }
 
         public void PrintDealerCard(Deck inputDeck)
@@ -30,7 +32,7 @@ namespace ConsoleProjectBlackJack
             int temp = 0;
             foreach (var input in dealerCardOnHand)
             {
-                temp = inputDeck.ConvertToNumber(input, dealerState);
+                temp = inputDeck.ConvertToNumber(input, dealerCardState);
                 Console.WriteLine($"{input}({temp})");
             }
         }

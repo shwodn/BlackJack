@@ -85,6 +85,8 @@ namespace ConsoleProjectBlackJack
         public void PlayerDraw(Deck inputDeck)
         {
             playerCardOnHand.Add(inputDeck.DrawCard());
+            PrintPlayerCard(inputDeck);
+            playerCardState = Game.UpdateCardState(inputDeck.CalCard(PlayerCardOnHand, playerCardState));
         }
 
         public void PlayerAdd(Deck inputDeck, Deck.DeckInfo inputCard)
@@ -118,7 +120,7 @@ namespace ConsoleProjectBlackJack
                     break;
 
                 case PlayerState.Hit:
-
+                    DoHit(inputDeck);
                     break;
 
                 case PlayerState.Surrender:
@@ -164,8 +166,29 @@ namespace ConsoleProjectBlackJack
                 bettedChip *= 2;
             }
 
-                Game.UpdateCardState(inputDeck.CalCard(PlayerCardOnHand, playerCardState));
+            playerCardState = Game.UpdateCardState(inputDeck.CalCard(PlayerCardOnHand, playerCardState));
             Console.WriteLine($"현재 배팅한 칩의 개수 : {bettedChip}개");
+        }
+
+        public void DoHit(Deck inputDeck)
+        {
+            PlayerDraw(inputDeck);
+            playerCardState = Game.UpdateCardState(inputDeck.CalCard(PlayerCardOnHand, playerCardState));
+
+            if (playerCardState == Game.CardState.Normal)
+            {
+                Console.WriteLine("계속해서 Hit 하시겠습니까?( 1. 예, 2. 아니오)");
+                input = Game.PreventInputExceptions(2);
+                switch (input)
+                {
+                    case 1:
+                        DoHit(inputDeck);
+                        break;
+                    case 2:
+                        break;
+                }
+
+            }
         }
     }
 }
