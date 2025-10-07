@@ -22,18 +22,20 @@ namespace ConsoleProjectBlackJack
 
             Console.WriteLine();
 
-            //player.Betting();
+            player.Betting();
             player.PlayerDraw(usingDeck);
             player.PlayerDraw(usingDeck);
             //player.PlayerAdd(usingDeck, Deck.DeckInfo.CloverAce);
             player.PrintPlayerCard(usingDeck);
-            Console.WriteLine(usingDeck.CalCard(player.PlayerCardOnHand, player.PlayerState)); 
+            Console.WriteLine(usingDeck.CalCard(player.PlayerCardOnHand, player.PlayerCardState)); 
+            player.StartPlayerTurn(usingDeck);
 
         }
         
-        public enum CardState { Null = 0, Normal = 1, BlackJack, Bust, Surrender = 11 }
+        public enum CardState { Null = 0, Normal = 1, BlackJack, Bust }
+        public enum RoundState { Playing = 0, PlayerWin, Push, PlayerLose}
 
-        public CardState isCardState(int input)
+        public static CardState UpdateCardState(int input)
         {
             if(input < 21)
             {
