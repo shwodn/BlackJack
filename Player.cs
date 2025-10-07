@@ -12,6 +12,7 @@ namespace ConsoleProjectBlackJack
         private int currentChip;
         private int bettedChip;
         private int input = 0;
+        private Game.CardState playerState;
         private List<Deck.DeckInfo> playerCardOnHand;
 
         public int CurrentChip { get { return currentChip; } set { currentChip = value; } }
@@ -19,12 +20,16 @@ namespace ConsoleProjectBlackJack
 
         public int Input { get { return input; } set { input = value; } }
 
+        public Game.CardState PlayerState { get { return playerState; } }
+        
+
         public List<Deck.DeckInfo> PlayerCardOnHand { get { return playerCardOnHand; } private set { playerCardOnHand = value; } }
 
         public Player()
         {
             currentChip = 50;
             bettedChip = 0;
+            playerState = Game.CardState.Null;
             playerCardOnHand = new List<Deck.DeckInfo>();
         }
 
@@ -40,7 +45,7 @@ namespace ConsoleProjectBlackJack
             if (bettedChip > currentChip)
             {
                 Console.WriteLine("현재 보유한 칩이 부족합니다. \n올인하시겠습니까?( 1. 예, 2. 아니오)");
-                input = Program.PreventInputExceptions(2);
+                input = Game.PreventInputExceptions(2);
                 switch (input)
                 {
                     case 1:
@@ -55,7 +60,7 @@ namespace ConsoleProjectBlackJack
             if(bettedChip == currentChip)
             {
                 Console.WriteLine("현재 배팅한 칩이 보유한 칩의 개수와 같습니다. \n올인하시겠습니까?( 1. 예, 2. 아니오)");
-                input = Program.PreventInputExceptions(2);
+                input = Game.PreventInputExceptions(2);
                 switch (input)
                 {
                     case 1:
@@ -87,7 +92,7 @@ namespace ConsoleProjectBlackJack
             int temp = 0;
             foreach( var input in playerCardOnHand )
             {
-                temp = inputDeck.isAJQK(input);
+                temp = inputDeck.ConvertToNumber(input, playerState);
                 Console.WriteLine($"{input}({temp})");
             }
         }

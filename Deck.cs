@@ -78,15 +78,30 @@ namespace ConsoleProjectBlackJack
         }
 
 
-        public void CalCard()
+        public int CalCard(List<DeckInfo> inputCard, Game.CardState inputState)
         {
+            int sum = 0;
+            
+            foreach(var input in inputCard)
+            {
+                sum += ConvertToNumber(input, inputState);
+            }
+
+            return sum;
 
         }
-        public int isAJQK(DeckInfo inputDeckInfo)
+        public int ConvertToNumber(DeckInfo inputDeckInfo, Game.CardState inputState)
         {
             if((int) inputDeckInfo % 13 == 1)
             {
-                return 11;
+                if(inputState == Game.CardState.Bust)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 11;
+                }
             }
             else if((int)inputDeckInfo % 13 > 10 && (int)inputDeckInfo % 13 < 13 || (int)inputDeckInfo % 13 == 0)
             {

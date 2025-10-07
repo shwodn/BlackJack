@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleProjectBlackJack
 {
-    internal class Program
+    internal class Game
     {
         // 메인 문 아래 작성한 기능도 있으니 참고 부탁드립니다
 
@@ -27,12 +27,27 @@ namespace ConsoleProjectBlackJack
             player.PlayerDraw(usingDeck);
             //player.PlayerAdd(usingDeck, Deck.DeckInfo.CloverAce);
             player.PrintPlayerCard(usingDeck);
+            Console.WriteLine(usingDeck.CalCard(player.PlayerCardOnHand, player.PlayerState)); 
 
-            Console.WriteLine();
-            usingDeck.PrintDeck();
         }
-
         
+        public enum CardState { Null = 0, Normal = 1, BlackJack, Bust, Surrender = 11 }
+
+        public CardState isCardState(int input)
+        {
+            if(input < 21)
+            {
+                return CardState.Normal;
+            }
+            else if(input == 21)
+            {
+                return CardState.BlackJack;
+            }
+            else
+            {
+                return CardState.Bust;
+            }
+        }
 
         // 예외 방지 매서드
         public static int PreventInputExceptions(int input)
