@@ -11,7 +11,7 @@ namespace ConsoleProjectBlackJack
         private Game.CardState dealerCardState;
         private List<Deck.DeckInfo> dealerCardOnHand;
 
-        public Game.CardState DealerState {  get { return dealerCardState; } }
+        public Game.CardState DealerCardState {  get { return dealerCardState; } }
         public List<Deck.DeckInfo> DealerCardOnHand { get { return dealerCardOnHand; } private set { dealerCardOnHand = value; } }
 
         public Dealer()
@@ -23,8 +23,32 @@ namespace ConsoleProjectBlackJack
         public void DealerDraw(Deck inputDeck)
         {
             dealerCardOnHand.Add(inputDeck.DrawCard());
-            PrintDealerCard(inputDeck);
-            dealerCardState = Game.UpdateCardState(inputDeck.CalCard( dealerCardOnHand, dealerCardState) );
+            if(dealerCardOnHand.Count < 3)
+            {
+                FirstPrintDealerCard(inputDeck);
+                dealerCardState = Game.UpdateCardState(inputDeck.CalCard(dealerCardOnHand, dealerCardState));
+            }
+            else
+            {
+                PrintDealerCard(inputDeck);
+                dealerCardState = Game.UpdateCardState(inputDeck.CalCard(dealerCardOnHand, dealerCardState));
+            }
+            
+        }
+
+        public void DealerAdd(Deck.DeckInfo inputCard)
+        {
+            dealerCardOnHand.Add(inputCard);
+        }
+
+        public void FirstPrintDealerCard(Deck inputDeck)
+        {
+            int temp = 0;
+
+            temp = inputDeck.ConvertToNumber(dealerCardOnHand[0], dealerCardState);
+            Console.WriteLine($"{dealerCardOnHand[0]}({temp})");
+            Console.WriteLine("???");
+
         }
 
         public void PrintDealerCard(Deck inputDeck)
@@ -34,6 +58,16 @@ namespace ConsoleProjectBlackJack
             {
                 temp = inputDeck.ConvertToNumber(input, dealerCardState);
                 Console.WriteLine($"{input}({temp})");
+            }
+        }
+
+        public void StartDealerTurn(Deck inputDeck)
+        {
+            PrintDealerCard(inputDeck);
+
+            if (inputDeck.CalCard(dealerCardOnHand, dealerCardState) < 17)
+            {
+                DealerDraw(inputDeck);
             }
         }
     }

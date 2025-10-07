@@ -22,13 +22,28 @@ namespace ConsoleProjectBlackJack
 
             Console.WriteLine();
 
+            player.PlayerDraw(usingDeck);
+            dealer.DealerDraw(usingDeck);
+            player.PlayerDraw(usingDeck);
+            dealer.DealerDraw(usingDeck);
+
             player.Betting();
-            player.PlayerDraw(usingDeck);
-            player.PlayerDraw(usingDeck);
-            //player.PlayerAdd(usingDeck, Deck.DeckInfo.CloverAce);
-            player.PrintPlayerCard(usingDeck);
-            Console.WriteLine(usingDeck.CalCard(player.PlayerCardOnHand, player.PlayerCardState)); 
+
+            //player.PlayerAdd( Deck.DeckInfo.CloverAce);
+            //player.PrintPlayerCard(usingDeck);
+            //Console.WriteLine(usingDeck.CalCard(player.PlayerCardOnHand, player.PlayerCardState)); 
+
             player.StartPlayerTurn(usingDeck);
+
+            //dealer.DealerAdd(Deck.DeckInfo.Clover6);
+            //dealer.DealerAdd(Deck.DeckInfo.Clover10);
+
+            if(player.PlayerCurrentState != Player.PlayerState.Surrender)
+            {
+                dealer.StartDealerTurn(usingDeck);
+            }
+
+
 
         }
         

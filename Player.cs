@@ -79,7 +79,6 @@ namespace ConsoleProjectBlackJack
 
             Console.WriteLine($"현재 배팅한 칩의 개수 : {bettedChip}개");
 
-
         }
 
         public void PlayerDraw(Deck inputDeck)
@@ -89,7 +88,7 @@ namespace ConsoleProjectBlackJack
             playerCardState = Game.UpdateCardState(inputDeck.CalCard(PlayerCardOnHand, playerCardState));
         }
 
-        public void PlayerAdd(Deck inputDeck, Deck.DeckInfo inputCard)
+        public void PlayerAdd( Deck.DeckInfo inputCard)
         {
             PlayerCardOnHand.Add(inputCard);
         }
