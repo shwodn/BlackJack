@@ -27,11 +27,13 @@ namespace ConsoleProjectBlackJack
             resetCard += dealer.ResetDealerCard;
 
             isPlaying = true;
-
             Console.CursorVisible = false;
 
 
 
+
+
+            isPlaying = StartGame();
 
             while (isPlaying)
             {
@@ -142,6 +144,31 @@ namespace ConsoleProjectBlackJack
 
         public enum CardState { Null = 0, Normal = 1, BlackJack, Bust }
         public enum RoundState { Error = 0, Playing, PlayerWin, Push, PlayerLose}
+
+        public static bool StartGame()
+        {
+            int temp = 0;
+
+            Console.SetCursorPosition(55, 5);
+            Console.WriteLine($"Black Jack");
+            Console.SetCursorPosition(30, 20);
+            Console.WriteLine($"1. Game Start");
+            Console.SetCursorPosition(85, 20);
+            Console.WriteLine($"2. Exit");
+
+            temp = PreventInputExceptions(2);
+
+            switch(temp)
+            {
+                case 1:
+                    return true;
+                case 2:
+                    return false;
+            }
+
+            //예상 외 입력시 거짓 반환
+            return false;
+        }
 
         public static void PrintBettedChip(Player inputPlayer)
         {
