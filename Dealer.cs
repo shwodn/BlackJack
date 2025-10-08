@@ -68,6 +68,7 @@ namespace ConsoleProjectBlackJack
             if (inputDeck.CalCard(dealerCardOnHand, dealerCardState) < 17)
             {
                 DealerDraw(inputDeck);
+                StartDealerTurn(inputDeck);
             }
         }
     }

@@ -33,6 +33,8 @@ namespace ConsoleProjectBlackJack
 
         public void ResetDeck()
         {
+            currentDeck.Clear();
+            usedCard.Clear();
            for (int i = 1; i < 53; i++)
            {
                 currentDeck.Add(i);

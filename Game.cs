@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,14 +22,11 @@ namespace ConsoleProjectBlackJack
             RoundState roundState = new RoundState();
             roundState = RoundState.Playing;
 
-            usingDeck.PrintDeck();
+
 
             Console.WriteLine();
 
-            player.PlayerDraw(usingDeck);
-            dealer.DealerDraw(usingDeck);
-            player.PlayerDraw(usingDeck);
-            dealer.DealerDraw(usingDeck);
+            DrawCardFirst(player, dealer, usingDeck);
 
             player.Betting();
 
@@ -50,6 +48,9 @@ namespace ConsoleProjectBlackJack
 
             Console.WriteLine(roundState);
 
+            CalChip(player, roundState);
+
+            Console.WriteLine(player.CurrentChip);
 
         }
         
@@ -57,7 +58,39 @@ namespace ConsoleProjectBlackJack
         public enum CardState { Null = 0, Normal = 1, BlackJack, Bust }
         public enum RoundState { Error = 0, Playing, PlayerWin, Push, PlayerLose}
 
-        
+        public static void DrawCardFirst(Player inputPlayer, Dealer inputDealer, Deck inputDeck)
+        {
+            inputPlayer.PlayerDraw(inputDeck);
+            inputDealer.DealerDraw(inputDeck);
+            inputPlayer.PlayerDraw(inputDeck);
+            inputDealer.DealerDraw(inputDeck);
+
+            if( inputPlayer.PlayerCardState == CardState.BlackJack || inputDealer.DealerCardState == CardState.BlackJack )
+            {
+                Console.WriteLine("카드를 다시 뽑습니다.");
+                DrawCardFirst(inputPlayer, inputDealer, inputDeck);
+            }
+        }
+
+        public static void CalChip(Player inputPlayer, RoundState inputRoundState)
+        {
+            if(inputRoundState == RoundState.PlayerLose && inputPlayer.PlayerCurrentState == Player.PlayerState.Surrender)
+            {
+                inputPlayer.CurrentChip -= inputPlayer.BettedChip / 2;
+            }
+            else if(inputRoundState == RoundState.PlayerLose)
+            {
+                inputPlayer.CurrentChip -= inputPlayer.BettedChip;
+            }
+            else if(inputRoundState == RoundState.PlayerWin && inputPlayer.PlayerCardState == CardState.BlackJack)
+            {
+                inputPlayer.CurrentChip += inputPlayer.BettedChip * 2;
+            }
+            else if(inputRoundState == RoundState.PlayerWin)
+            {
+                inputPlayer.CurrentChip += inputPlayer.BettedChip;
+            }
+        }
 
         public static RoundState IsPlayerWin(Player inputPlayer, Dealer inputDealer, RoundState inputRoundState, Deck inputDeck)
         {

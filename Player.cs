@@ -20,7 +20,7 @@ namespace ConsoleProjectBlackJack
         private List<Deck.DeckInfo> playerCardOnHand;
 
         public int CurrentChip { get { return currentChip; } set { currentChip = value; } }
-        public int BettedChip { get { return bettedChip; } private set { bettedChip = value; } }
+        public int BettedChip { get { return bettedChip; }  set { bettedChip = value; } }
         public int BettedChipDouble { get { return bettedChipDouble; } }
         public int Input { get { return input; } set { input = value; } }
 
