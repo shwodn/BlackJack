@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace ConsoleProjectBlackJack
 {
@@ -27,24 +28,68 @@ namespace ConsoleProjectBlackJack
 
             isPlaying = true;
 
+            Console.SetCursorPosition(45, 22);
+            Console.WriteLine("현재 배팅한 칩의 개수 : 10개");
+            Console.ReadLine();
+            
+
+
             while (isPlaying)
             {
-                if(usingDeck.CurrentDeck.Count < 6)
-                {
-                    Console.WriteLine("카드가 부족하여 다시 섞습니다.");
-                    usingDeck.ResetDeck();
-                }
 
                 // 라운드 초기화
                 resetCard();
                 player.ResetRoundPlayer();
                 roundState = RoundState.Playing;
+                
 
+                // 라운드 표시 화면
+                Console.Clear();
+                Console.SetCursorPosition(55, 5);
                 Console.WriteLine($"Round {round}");
+                Thread.Sleep(1000);
+
+                if (usingDeck.CurrentDeck.Count < 6)
+                {
+                    // 카드 섞는 화면
+                    Console.Clear();
+                    Console.SetCursorPosition(43, 22);
+                    Console.Write("카드가 부족하여 다시 섞습니다.");
+                    for(int i = 0; i < 3; i++)
+                    {
+                        Console.Write(". ");
+                        Thread.Sleep(1000);
+                    }
+                    usingDeck.ResetDeck();
+                }
+                            
+                // 게임 메인 화면
+                Console.Clear();
+                Console.SetCursorPosition(30, 8);
+                Console.WriteLine("Player Card");
+                Console.SetCursorPosition(80, 8);
+                Console.WriteLine("Dealer Card");
+
+                Console.SetCursorPosition(100, 25);
+                Console.WriteLine("                 ");
+                Console.SetCursorPosition(100, 25);
+                Console.Write("칩 : ");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine(player.CurrentChip);
+                Console.ResetColor();
+
+                Console.SetCursorPosition(100, 27);
+                Console.WriteLine("                 ");
+                Console.SetCursorPosition(100, 27);
+                Console.Write("배팅한 칩 : ");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine(player.BettedChip);
+                Console.ResetColor();
 
                 do
                 {
                     resetCard();
+                    Console.SetCursorPosition(47, 22);
                     Console.WriteLine("카드를 뽑는 중입니다.");
                     DrawCardFirst(player, dealer, usingDeck);
                 } while (player.PlayerCardState == CardState.BlackJack || dealer.DealerCardState == CardState.BlackJack);
@@ -211,6 +256,8 @@ namespace ConsoleProjectBlackJack
 
             while (isException)
             {
+
+                Console.SetCursorPosition(60, 25);
                 if (int.TryParse(Console.ReadLine(), out temp))
                 {
                     if(temp > 0 && temp < input + 1)

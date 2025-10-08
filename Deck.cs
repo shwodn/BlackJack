@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Threading;
+                
 namespace ConsoleProjectBlackJack
 {
     internal class Deck
@@ -47,6 +48,7 @@ namespace ConsoleProjectBlackJack
         // 피셔 에이츠 알고리즘 활용
         public void ShuffleDeck()
         {
+
             for (int i = currentDeck.Count - 1; i > 0; i--)
             {
                 temp = currentDeck[i];
@@ -71,6 +73,7 @@ namespace ConsoleProjectBlackJack
         {
             temp = currentDeck[0];
             RemoveCard(temp);
+            Thread.Sleep(1000);
             return (DeckInfo)temp;
 
         }

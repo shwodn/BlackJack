@@ -3,6 +3,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ConsoleProjectBlackJack
@@ -15,6 +16,7 @@ namespace ConsoleProjectBlackJack
         private int bettedChip;
         private int bettedChipDouble;
         private int input = 0;
+
         private PlayerState playerState;
         private Game.CardState playerCardState;
         private List<Deck.DeckInfo> playerCardOnHand;
@@ -23,6 +25,7 @@ namespace ConsoleProjectBlackJack
         public int BettedChip { get { return bettedChip; }  set { bettedChip = value; } }
         public int BettedChipDouble { get { return bettedChipDouble; } }
         public int Input { get { return input; } set { input = value; } }
+
 
         public Game.CardState PlayerCardState { get { return playerCardState; } }
         public PlayerState PlayerCurrentState { get { return playerState; } }
@@ -40,17 +43,31 @@ namespace ConsoleProjectBlackJack
 
         public void Betting() 
         {
-            
+            Console.SetCursorPosition(30, 22);
+            Console.WriteLine("                                                                 ");
+            Console.SetCursorPosition(45, 22);
             Console.WriteLine("배팅할 칩의 개수를 정해주세요.");
-            if(int.TryParse(Console.ReadLine(), out bettedChip) != true)
+            Console.SetCursorPosition(60, 25);
+            if (int.TryParse(Console.ReadLine(), out bettedChip) != true)
             {
                 Betting();
             }
 
             if (bettedChip > currentChip)
             {
-                Console.WriteLine("현재 보유한 칩이 부족합니다. \n올인하시겠습니까?( 1. 예, 2. 아니오)");
+                Console.SetCursorPosition(30, 22);
+                Console.WriteLine("                                                                 ");
+                Console.SetCursorPosition(45, 22);
+                Console.WriteLine("현재 보유한 칩이 부족합니다.");
+                Console.SetCursorPosition(40, 23);
+                Console.WriteLine("                                                                 ");
+                Console.SetCursorPosition(40, 23);
+                Console.WriteLine("올인하시겠습니까?( 1. 예, 2. 아니오)");
                 input = Game.PreventInputExceptions(2);
+                Console.SetCursorPosition(30, 22);
+                Console.WriteLine("                                                                 ");
+                Console.SetCursorPosition(30, 23);
+                Console.WriteLine("                                                                 ");
                 switch (input)
                 {
                     case 1:
@@ -64,8 +81,19 @@ namespace ConsoleProjectBlackJack
 
             if(bettedChip == currentChip)
             {
-                Console.WriteLine("현재 배팅한 칩이 보유한 칩의 개수와 같습니다. \n올인하시겠습니까?( 1. 예, 2. 아니오)");
+                Console.SetCursorPosition(30, 22);
+                Console.WriteLine("                                                                 ");
+                Console.SetCursorPosition(38, 22);
+                Console.WriteLine("현재 배팅한 칩이 보유한 칩의 개수와 같습니다.");
+                Console.SetCursorPosition(30, 23);
+                Console.WriteLine("                                                                 ");
+                Console.SetCursorPosition(40, 23);
+                Console.WriteLine("올인하시겠습니까?( 1. 예, 2. 아니오)");
                 input = Game.PreventInputExceptions(2);
+                Console.SetCursorPosition(30, 22);
+                Console.WriteLine("                                                                 ");
+                Console.SetCursorPosition(30, 23);
+                Console.WriteLine("                                                                 ");
                 switch (input)
                 {
                     case 1:
@@ -76,15 +104,20 @@ namespace ConsoleProjectBlackJack
                         break;
                 }
             }
-
+            Console.SetCursorPosition(30, 22);
+            Console.WriteLine("                                                                 ");
+            Console.SetCursorPosition(45, 22);
             Console.WriteLine($"현재 배팅한 칩의 개수 : {bettedChip}개");
+            Thread.Sleep(1000);
+            Console.SetCursorPosition(30, 22);
+            Console.WriteLine("                                                                 ");
 
         }
 
         public void ResetRoundPlayer()
         {
             BettedChip = 1;
-            playerState = Player.PlayerState.Null;
+            playerState = PlayerState.Null;
         }
 
         public void ResetPlayerCard()
@@ -108,10 +141,15 @@ namespace ConsoleProjectBlackJack
         public void PrintPlayerCard(Deck inputDeck)
         {
             int temp = 0;
-            foreach( var input in playerCardOnHand )
+            int cardCount = 0;
+            foreach ( var input in playerCardOnHand )
             {
                 temp = inputDeck.ConvertToNumber(input, playerCardState);
+                Console.SetCursorPosition(30, 10 + cardCount);
+                Console.WriteLine("                 ");
+                Console.SetCursorPosition(30, 10 + cardCount);
                 Console.WriteLine($"{input}({temp})");
+                cardCount++;
             }
         }
 
@@ -146,8 +184,19 @@ namespace ConsoleProjectBlackJack
             bettedChipDouble = bettedChip * 2;
             if (bettedChipDouble > currentChip)
             {
-                Console.WriteLine("현재 보유한 칩이 부족합니다. \n올인하시겠습니까?( 1. 예, 2. 아니오)");
+                Console.SetCursorPosition(30, 22);
+                Console.WriteLine("                                                                 ");
+                Console.SetCursorPosition(45, 22);
+                Console.WriteLine("현재 보유한 칩이 부족합니다.");
+                Console.SetCursorPosition(40, 23);
+                Console.WriteLine("                                                                 ");
+                Console.SetCursorPosition(40, 23);
+                Console.WriteLine("올인하시겠습니까?( 1. 예, 2. 아니오)");
                 input = Game.PreventInputExceptions(2);
+                Console.SetCursorPosition(30, 22);
+                Console.WriteLine("                                                                 ");
+                Console.SetCursorPosition(30, 23);
+                Console.WriteLine("                                                                 ");
                 switch (input)
                 {
                     case 1:
@@ -160,8 +209,19 @@ namespace ConsoleProjectBlackJack
             }
             else if(bettedChipDouble == currentChip)
             {
-                Console.WriteLine("현재 배팅한 칩이 보유한 칩의 개수와 같습니다. \n올인하시겠습니까?( 1. 예, 2. 아니오)");
+                Console.SetCursorPosition(30, 22);
+                Console.WriteLine("                                                                 ");
+                Console.SetCursorPosition(38, 22);
+                Console.WriteLine("현재 배팅한 칩이 보유한 칩의 개수와 같습니다.");
+                Console.SetCursorPosition(30, 23);
+                Console.WriteLine("                                                                 ");
+                Console.SetCursorPosition(40, 23);
+                Console.WriteLine("올인하시겠습니까?( 1. 예, 2. 아니오)");
                 input = Game.PreventInputExceptions(2);
+                Console.SetCursorPosition(30, 22);
+                Console.WriteLine("                                                                 ");
+                Console.SetCursorPosition(30, 23);
+                Console.WriteLine("                                                                 ");
                 switch (input)
                 {
                     case 1:

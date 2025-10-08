@@ -8,6 +8,7 @@ namespace ConsoleProjectBlackJack
 {
     internal class Dealer
     {
+
         private Game.CardState dealerCardState;
         private List<Deck.DeckInfo> dealerCardOnHand;
 
@@ -52,18 +53,33 @@ namespace ConsoleProjectBlackJack
             int temp = 0;
 
             temp = inputDeck.ConvertToNumber(dealerCardOnHand[0], dealerCardState);
-            Console.WriteLine($"{dealerCardOnHand[0]}({temp})           ");
-            Console.WriteLine("???          ");
+            Console.SetCursorPosition(80, 10);
+            Console.WriteLine("                 ");
+            Console.SetCursorPosition(80, 10);
+            Console.WriteLine($"{dealerCardOnHand[0]}({temp})");
+            if(dealerCardOnHand.Count == 2)
+            {
+                Console.SetCursorPosition(80, 11);
+                Console.WriteLine("                 ");
+                Console.SetCursorPosition(80, 11);
+                Console.WriteLine("???");
+            }
+            
 
         }
 
         public void PrintDealerCard(Deck inputDeck)
         {
+            int cardCount = 0;
             int temp = 0;
             foreach (var input in dealerCardOnHand)
             {
                 temp = inputDeck.ConvertToNumber(input, dealerCardState);
-                Console.WriteLine($"{input}({temp})         ");
+                Console.SetCursorPosition(80, 10 + cardCount);
+                Console.WriteLine("                 ");
+                Console.SetCursorPosition(80, 10 + cardCount);
+                Console.WriteLine($"{input}({temp}) ");
+                cardCount++;
             }
         }
 
