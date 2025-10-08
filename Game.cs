@@ -28,10 +28,9 @@ namespace ConsoleProjectBlackJack
 
             isPlaying = true;
 
-            Console.SetCursorPosition(45, 22);
-            Console.WriteLine("현재 배팅한 칩의 개수 : 10개");
-            Console.ReadLine();
-            
+            Console.CursorVisible = false;
+
+
 
 
             while (isPlaying)
@@ -54,7 +53,7 @@ namespace ConsoleProjectBlackJack
                     // 카드 섞는 화면
                     Console.Clear();
                     Console.SetCursorPosition(43, 22);
-                    Console.Write("카드가 부족하여 다시 섞습니다.");
+                    Console.Write("카드가 부족하여 다시 섞습니다");
                     for(int i = 0; i < 3; i++)
                     {
                         Console.Write(". ");
@@ -73,7 +72,7 @@ namespace ConsoleProjectBlackJack
                 Console.SetCursorPosition(100, 25);
                 Console.WriteLine("                 ");
                 Console.SetCursorPosition(100, 25);
-                Console.Write("칩 : ");
+                Console.Write("보유한 칩 : ");
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine(player.CurrentChip);
                 Console.ResetColor();
@@ -96,27 +95,40 @@ namespace ConsoleProjectBlackJack
 
                 player.Betting();
 
+                PrintBettedChip(player);
+
                 player.StartPlayerTurn(usingDeck);
+
+                PrintBettedChip(player);
 
                 if (player.PlayerCurrentState != Player.PlayerState.Surrender)
                 {
                     dealer.StartDealerTurn(usingDeck);
                 }
+                Thread.Sleep(1000);
 
                 roundState = IsPlayerWin(player, dealer, roundState, usingDeck);
 
+                // 라운드 결과 화면
+                Console.Clear();
+                Console.SetCursorPosition(55, 5);
                 Console.WriteLine(roundState);
+                Thread.Sleep(2000);
                 CalChip(player, roundState);
-
-                Console.WriteLine(player.CurrentChip);
 
                 if (player.CurrentChip > 99)
                 {
+                    // 게임 승리 화면
+                    Console.Clear();
+                    Console.SetCursorPosition(55, 5);
                     Console.WriteLine("Player Win");
                     isPlaying = false;
                 }
                 else if (player.CurrentChip < 1)
                 {
+                    // 게임 패배 화면
+                    Console.Clear();
+                    Console.SetCursorPosition(53, 5);
                     Console.WriteLine("Player Lose");
                     isPlaying = false;
                 }
@@ -131,14 +143,22 @@ namespace ConsoleProjectBlackJack
         public enum CardState { Null = 0, Normal = 1, BlackJack, Bust }
         public enum RoundState { Error = 0, Playing, PlayerWin, Push, PlayerLose}
 
+        public static void PrintBettedChip(Player inputPlayer)
+        {
+            Console.SetCursorPosition(100, 27);
+            Console.WriteLine("                 ");
+            Console.SetCursorPosition(100, 27);
+            Console.Write("배팅한 칩 : ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(inputPlayer.BettedChip);
+            Console.ResetColor();
+        }
         public static void DrawCardFirst(Player inputPlayer, Dealer inputDealer, Deck inputDeck)
         {
             inputPlayer.PlayerDraw(inputDeck);
             inputDealer.DealerDraw(inputDeck);
             inputPlayer.PlayerDraw(inputDeck);
             inputDealer.DealerDraw(inputDeck);
-
-           
         }
 
         public static void CalChip(Player inputPlayer, RoundState inputRoundState)
@@ -253,6 +273,7 @@ namespace ConsoleProjectBlackJack
         {
             bool isException = true;
             int temp = 0;
+            Console.CursorVisible = true;
 
             while (isException)
             {
@@ -262,10 +283,16 @@ namespace ConsoleProjectBlackJack
                 {
                     if(temp > 0 && temp < input + 1)
                     {
+                        Console.SetCursorPosition(55, 25);
+                        Console.WriteLine("                 ");
+                        Console.CursorVisible = false;
                         return temp;
                     }
                     else
                     {
+                        Console.SetCursorPosition(55, 25);
+                        Console.WriteLine("                 ");
+                        Console.CursorVisible = false;
                         continue;
                     }
                 }

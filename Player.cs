@@ -48,10 +48,18 @@ namespace ConsoleProjectBlackJack
             Console.SetCursorPosition(45, 22);
             Console.WriteLine("배팅할 칩의 개수를 정해주세요.");
             Console.SetCursorPosition(60, 25);
+            Console.CursorVisible = true;
             if (int.TryParse(Console.ReadLine(), out bettedChip) != true)
             {
+                Console.CursorVisible = false;
+                Console.SetCursorPosition(55, 25);
+                Console.WriteLine("                 ");
                 Betting();
             }
+
+            Console.CursorVisible = false;
+            Console.SetCursorPosition(55, 25);
+            Console.WriteLine("                 ");
 
             if (bettedChip > currentChip)
             {
@@ -155,8 +163,19 @@ namespace ConsoleProjectBlackJack
 
         public void StartPlayerTurn(Deck inputDeck)
         {
-            Console.WriteLine("현재 플레이어의 턴입니다. 다음 중 원하는 선택지를 입력해주세요. \n1. Stay 2. DoubleDown 3. Hit 4. Surrender");
+            Console.SetCursorPosition(30, 22);
+            Console.WriteLine("                                                                 ");
+            Console.SetCursorPosition(30, 22);
+            Console.WriteLine("현재 플레이어의 턴입니다. 다음 중 원하는 선택지를 입력해주세요.");
+            Console.SetCursorPosition(30, 23);
+            Console.WriteLine("                                                                 ");
+            Console.SetCursorPosition(38, 23);
+            Console.WriteLine("1. Stay 2. DoubleDown 3. Hit 4. Surrender");
             input = Game.PreventInputExceptions(4);
+            Console.SetCursorPosition(30, 22);
+            Console.WriteLine("                                                                 ");
+            Console.SetCursorPosition(30, 23);
+            Console.WriteLine("                                                                 ");
 
             switch ((PlayerState)input)
             {
@@ -238,7 +257,13 @@ namespace ConsoleProjectBlackJack
             }
 
             playerCardState = Game.UpdateCardState(inputDeck.CalCard(PlayerCardOnHand, playerCardState));
+            Console.SetCursorPosition(30, 22);
+            Console.WriteLine("                                                                 ");
+            Console.SetCursorPosition(45, 22);
             Console.WriteLine($"현재 배팅한 칩의 개수 : {bettedChip}개");
+            Thread.Sleep(1000);
+            Console.SetCursorPosition(30, 22);
+            Console.WriteLine("                                                                 ");
         }
 
         public void DoHit(Deck inputDeck)
@@ -248,8 +273,14 @@ namespace ConsoleProjectBlackJack
 
             if (playerCardState == Game.CardState.Normal)
             {
+                Console.SetCursorPosition(30, 22);
+                Console.WriteLine("                                                                 ");
+                Console.SetCursorPosition(38, 22);
                 Console.WriteLine("계속해서 Hit 하시겠습니까?( 1. 예, 2. 아니오)");
                 input = Game.PreventInputExceptions(2);
+                Console.SetCursorPosition(30, 22);
+                Console.WriteLine("                                                                 ");
+
                 switch (input)
                 {
                     case 1:
