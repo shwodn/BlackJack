@@ -14,43 +14,71 @@ namespace ConsoleProjectBlackJack
 
         static void Main(string[] args)
         {
-            
+            int round = 1;
+            bool isPlaying = false;
 
             Player player = new Player();
             Dealer dealer = new Dealer();
             Deck usingDeck = new Deck();
             RoundState roundState = new RoundState();
             roundState = RoundState.Playing;
+            Action resetCard = player.ResetPlayerCard;
+            resetCard += dealer.ResetDealerCard;
 
+            isPlaying = true;
 
-
-            Console.WriteLine();
-
-            DrawCardFirst(player, dealer, usingDeck);
-
-            player.Betting();
-
-            //player.PlayerAdd( Deck.DeckInfo.CloverAce);
-            //player.PrintPlayerCard(usingDeck);
-            //Console.WriteLine(usingDeck.CalCard(player.PlayerCardOnHand, player.PlayerCardState)); 
-
-            player.StartPlayerTurn(usingDeck);
-
-            //dealer.DealerAdd(Deck.DeckInfo.Clover6);
-            //dealer.DealerAdd(Deck.DeckInfo.Clover10);
-
-            if(player.PlayerCurrentState != Player.PlayerState.Surrender)
+            while (isPlaying)
             {
-                dealer.StartDealerTurn(usingDeck);
+                if(usingDeck.CurrentDeck.Count < 6)
+                {
+                    Console.WriteLine("카드가 부족하여 다시 섞습니다.");
+                    usingDeck.ResetDeck();
+                }
+
+                // 라운드 초기화
+                resetCard();
+                player.ResetRoundPlayer();
+                roundState = RoundState.Playing;
+
+                Console.WriteLine($"Round {round}");
+
+                do
+                {
+                    resetCard();
+                    Console.WriteLine("카드를 뽑는 중입니다.");
+                    DrawCardFirst(player, dealer, usingDeck);
+                } while (player.PlayerCardState == CardState.BlackJack || dealer.DealerCardState == CardState.BlackJack);
+
+                player.Betting();
+
+                player.StartPlayerTurn(usingDeck);
+
+                if (player.PlayerCurrentState != Player.PlayerState.Surrender)
+                {
+                    dealer.StartDealerTurn(usingDeck);
+                }
+
+                roundState = IsPlayerWin(player, dealer, roundState, usingDeck);
+
+                Console.WriteLine(roundState);
+                CalChip(player, roundState);
+
+                Console.WriteLine(player.CurrentChip);
+
+                if (player.CurrentChip > 99)
+                {
+                    Console.WriteLine("Player Win");
+                    isPlaying = false;
+                }
+                else if (player.CurrentChip < 1)
+                {
+                    Console.WriteLine("Player Lose");
+                    isPlaying = false;
+                }
+
+                round++;
             }
-
-            roundState = IsPlayerWin(player, dealer, roundState, usingDeck);
-
-            Console.WriteLine(roundState);
-
-            CalChip(player, roundState);
-
-            Console.WriteLine(player.CurrentChip);
+            
 
         }
         
@@ -65,16 +93,13 @@ namespace ConsoleProjectBlackJack
             inputPlayer.PlayerDraw(inputDeck);
             inputDealer.DealerDraw(inputDeck);
 
-            if( inputPlayer.PlayerCardState == CardState.BlackJack || inputDealer.DealerCardState == CardState.BlackJack )
-            {
-                Console.WriteLine("카드를 다시 뽑습니다.");
-                DrawCardFirst(inputPlayer, inputDealer, inputDeck);
-            }
+           
         }
 
         public static void CalChip(Player inputPlayer, RoundState inputRoundState)
         {
-            if(inputRoundState == RoundState.PlayerLose && inputPlayer.PlayerCurrentState == Player.PlayerState.Surrender)
+
+            if (inputRoundState == RoundState.PlayerLose && inputPlayer.PlayerCurrentState == Player.PlayerState.Surrender)
             {
                 inputPlayer.CurrentChip -= inputPlayer.BettedChip / 2;
             }
@@ -123,7 +148,7 @@ namespace ConsoleProjectBlackJack
                     case 2:
                         return RoundState.Push;
                     case 3:
-                        break;
+                        return RoundState.PlayerWin;
                 }
             }
 
@@ -178,7 +203,7 @@ namespace ConsoleProjectBlackJack
             }
         }
 
-        // 예외 방지 매서드
+        // 예외 방지 매서드(1부터 인자로 받은 숫자이하를 제외한 나머지는 예외로 간주)
         public static int PreventInputExceptions(int input)
         {
             bool isException = true;

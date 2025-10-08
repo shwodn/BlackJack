@@ -20,6 +20,12 @@ namespace ConsoleProjectBlackJack
             dealerCardState = Game.CardState.Null;
         }
 
+        public void ResetDealerCard()
+        {
+            dealerCardOnHand.Clear();
+            dealerCardState = Game.CardState.Null;
+        }
+
         public void DealerDraw(Deck inputDeck)
         {
             dealerCardOnHand.Add(inputDeck.DrawCard());
@@ -46,8 +52,8 @@ namespace ConsoleProjectBlackJack
             int temp = 0;
 
             temp = inputDeck.ConvertToNumber(dealerCardOnHand[0], dealerCardState);
-            Console.WriteLine($"{dealerCardOnHand[0]}({temp})");
-            Console.WriteLine("???");
+            Console.WriteLine($"{dealerCardOnHand[0]}({temp})           ");
+            Console.WriteLine("???          ");
 
         }
 
@@ -57,7 +63,7 @@ namespace ConsoleProjectBlackJack
             foreach (var input in dealerCardOnHand)
             {
                 temp = inputDeck.ConvertToNumber(input, dealerCardState);
-                Console.WriteLine($"{input}({temp})");
+                Console.WriteLine($"{input}({temp})         ");
             }
         }
 

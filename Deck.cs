@@ -22,6 +22,8 @@ namespace ConsoleProjectBlackJack
          private List<int> usedCard;
          private Random deckRandom = new Random();
 
+        public List<int> CurrentDeck {  get { return currentDeck; } set { currentDeck = value; } }
+
 
         public Deck()
         {

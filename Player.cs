@@ -81,6 +81,18 @@ namespace ConsoleProjectBlackJack
 
         }
 
+        public void ResetRoundPlayer()
+        {
+            BettedChip = 1;
+            playerState = Player.PlayerState.Null;
+        }
+
+        public void ResetPlayerCard()
+        {
+            playerCardOnHand.Clear();
+            playerCardState = Game.CardState.Null;
+        }
+
         public void PlayerDraw(Deck inputDeck)
         {
             playerCardOnHand.Add(inputDeck.DrawCard());
