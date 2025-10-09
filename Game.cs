@@ -107,7 +107,7 @@ namespace ConsoleProjectBlackJack
                 {
                     dealer.StartDealerTurn(usingDeck);
                 }
-                Thread.Sleep(1000);
+                Thread.Sleep(3000);
 
                 roundState = IsPlayerWin(player, dealer, roundState, usingDeck);
 
@@ -115,7 +115,7 @@ namespace ConsoleProjectBlackJack
                 Console.Clear();
                 Console.SetCursorPosition(55, 5);
                 Console.WriteLine(roundState);
-                Thread.Sleep(2000);
+                Thread.Sleep(3000);
                 CalChip(player, roundState);
 
                 if (player.CurrentChip > 99)
