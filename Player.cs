@@ -85,6 +85,14 @@ namespace ConsoleProjectBlackJack
                         Betting();
                         break;
                 }
+                Console.SetCursorPosition(30, 22);
+                Console.WriteLine("                                                                 ");
+                Console.SetCursorPosition(45, 22);
+                Console.WriteLine($"현재 배팅한 칩의 개수 : {bettedChip}개");
+                Thread.Sleep(1000);
+                Console.SetCursorPosition(30, 22);
+                Console.WriteLine("                                                                 ");
+                return;
             }
 
             if(bettedChip == currentChip)
@@ -111,14 +119,16 @@ namespace ConsoleProjectBlackJack
                         Betting();
                         break;
                 }
+                Console.SetCursorPosition(30, 22);
+                Console.WriteLine("                                                                 ");
+                Console.SetCursorPosition(45, 22);
+                Console.WriteLine($"현재 배팅한 칩의 개수 : {bettedChip}개");
+                Thread.Sleep(1000);
+                Console.SetCursorPosition(30, 22);
+                Console.WriteLine("                                                                 ");
+                return;
             }
-            Console.SetCursorPosition(30, 22);
-            Console.WriteLine("                                                                 ");
-            Console.SetCursorPosition(45, 22);
-            Console.WriteLine($"현재 배팅한 칩의 개수 : {bettedChip}개");
-            Thread.Sleep(1000);
-            Console.SetCursorPosition(30, 22);
-            Console.WriteLine("                                                                 ");
+            
 
         }
 

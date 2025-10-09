@@ -122,16 +122,22 @@ namespace ConsoleProjectBlackJack
                 {
                     // 게임 승리 화면
                     Console.Clear();
-                    Console.SetCursorPosition(55, 5);
-                    Console.WriteLine("Player Win");
+                    Console.SetCursorPosition(57, 5);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("You Win");
+                    Console.ResetColor();
+                    Thread.Sleep(3000);
                     isPlaying = false;
                 }
                 else if (player.CurrentChip < 1)
                 {
                     // 게임 패배 화면
                     Console.Clear();
-                    Console.SetCursorPosition(53, 5);
-                    Console.WriteLine("Player Lose");
+                    Console.SetCursorPosition(55, 5);
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("You Lose");
+                    Console.ResetColor();
+                    Thread.Sleep(3000);
                     isPlaying = false;
                 }
 

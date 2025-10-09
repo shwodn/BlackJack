@@ -11,7 +11,7 @@ namespace ConsoleProjectBlackJack
     {
         public enum DeckInfo
         {
-             HeartAce = 1, Heart2, Heart3, Heart4, Heart5, Heart6, Heart7, Heart8, Heart9, Heart10, HeartJack, HeartQueen, HeartKing = 13,
+            Null= 0, HeartAce = 1, Heart2, Heart3, Heart4, Heart5, Heart6, Heart7, Heart8, Heart9, Heart10, HeartJack, HeartQueen, HeartKing = 13,
             SpadeAce = 14, Spade2, Spade3, Spade4, Spade5, Spade6, Spade7, Spade8, Spade9, Spade10, SpadeJack, SpadeQueen, SpadeKing = 26,
             DiamondAce = 27, Diamond2, Diamond3, Diamond4, Diamond5, Diamond6, Diamond7, Diamond8, Diamond9, Diamond10, DiamondJack, DiamondQueen, DiamondKing = 39,
             CloverAce = 40, Clover2, Clover3, Clover4, Clover5, Clover6, Clover7, Clover8, Clover9, Clover10, CloverJack, CloverQueen, CloverKing = 52
@@ -71,10 +71,19 @@ namespace ConsoleProjectBlackJack
 
         public DeckInfo DrawCard()
         {
-            temp = currentDeck[0];
-            RemoveCard(temp);
-            Thread.Sleep(1000);
-            return (DeckInfo)temp;
+            if(currentDeck.Count != 0)
+            {
+                temp = currentDeck[0];
+                RemoveCard(temp);
+                Thread.Sleep(1000);
+                return (DeckInfo)temp;
+            }
+            else
+            {
+                ResetDeck();
+                DrawCard();
+                return DeckInfo.Null;
+            }
 
         }
 
