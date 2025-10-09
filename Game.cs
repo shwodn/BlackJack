@@ -134,7 +134,7 @@ namespace ConsoleProjectBlackJack
                     // 게임 패배 화면
                     Console.Clear();
                     Console.SetCursorPosition(55, 5);
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("You Lose");
                     Console.ResetColor();
                     Thread.Sleep(3000);
