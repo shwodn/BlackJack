@@ -29,8 +29,7 @@ namespace ConsoleProjectBlackJack
             isPlaying = true;
             Console.CursorVisible = false;
 
-
-
+            
 
 
             isPlaying = StartGame();
