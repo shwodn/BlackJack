@@ -188,10 +188,10 @@ namespace ConsoleProjectBlackJack
         }
         public static void DrawCardFirst(Player inputPlayer, Dealer inputDealer, Deck inputDeck)
         {
-            inputPlayer.PlayerDraw(inputDeck);
-            inputDealer.DealerDraw(inputDeck);
-            inputPlayer.PlayerDraw(inputDeck);
-            inputDealer.DealerDraw(inputDeck);
+            inputPlayer.Draw(inputDeck);
+            inputDealer.Draw(inputDeck);
+            inputPlayer.Draw(inputDeck);
+            inputDealer.Draw(inputDeck);
         }
 
         public static void CalChip(Player inputPlayer, RoundState inputRoundState)

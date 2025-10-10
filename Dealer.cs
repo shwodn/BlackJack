@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleProjectBlackJack
 {
-    internal class Dealer
+    internal class Dealer : Character , IDraw
     {
 
         private Game.CardState dealerCardState;
@@ -27,7 +27,7 @@ namespace ConsoleProjectBlackJack
             dealerCardState = Game.CardState.Null;
         }
 
-        public void DealerDraw(Deck inputDeck)
+        public void Draw(Deck inputDeck)
         {
             dealerCardOnHand.Add(inputDeck.DrawCard());
             if(dealerCardOnHand.Count < 3)
@@ -89,7 +89,7 @@ namespace ConsoleProjectBlackJack
 
             if (inputDeck.CalCard(dealerCardOnHand, dealerCardState) < 17)
             {
-                DealerDraw(inputDeck);
+                Draw(inputDeck);
                 StartDealerTurn(inputDeck);
             }
         }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleProjectBlackJack
 {
-    internal class Player
+    internal class Player : Character , IDraw
     {
         public enum PlayerState { Null = 0, Stay = 1, DoubleDown, Hit, Surrender }
 
@@ -144,7 +144,7 @@ namespace ConsoleProjectBlackJack
             playerCardState = Game.CardState.Null;
         }
 
-        public void PlayerDraw(Deck inputDeck)
+        public void Draw(Deck inputDeck)
         {
             playerCardOnHand.Add(inputDeck.DrawCard());
             PrintPlayerCard(inputDeck);
@@ -209,7 +209,7 @@ namespace ConsoleProjectBlackJack
 
         public void DoDoubleDown(Deck inputDeck)
         {
-            PlayerDraw(inputDeck);
+            Draw(inputDeck);
             bettedChipDouble = bettedChip * 2;
             if (bettedChipDouble > currentChip)
             {
@@ -278,7 +278,7 @@ namespace ConsoleProjectBlackJack
 
         public void DoHit(Deck inputDeck)
         {
-            PlayerDraw(inputDeck);
+            Draw(inputDeck);
             playerCardState = Game.UpdateCardState(inputDeck.CalCard(PlayerCardOnHand, playerCardState));
 
             if (playerCardState == Game.CardState.Normal)
